@@ -13,12 +13,13 @@ public class BaseTest {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-       System.setProperty("webdriver.chrome.driver", "/Users/cwandja/projects/common/src/main/resources/chromedriver2");
-       Configuration.browser = System.getProperty("selenide.browser", "chrome");
-       WebDriver.Window window = WebDriverRunner.getWebDriver().manage().window();
-       window.maximize();
-       Dimension size = window.getSize();
-       System.out.println("Display size = " + size.getWidth() + "x" + size.getHeight());
+        String pathToCommonProjectDir = System.getProperty("pathToCommonProjectDir", "/Users/cwandja/projects/common");
+        System.setProperty("webdriver.chrome.driver", pathToCommonProjectDir + "/src/main/resources/chromedriver2");
+        Configuration.browser = System.getProperty("selenide.browser", "chrome");
+        WebDriver.Window window = WebDriverRunner.getWebDriver().manage().window();
+        window.maximize();
+        Dimension size = window.getSize();
+        System.out.println("Display size = " + size.getWidth() + "x" + size.getHeight());
     }
 
     @BeforeTest(alwaysRun = true)
