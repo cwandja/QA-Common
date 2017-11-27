@@ -80,9 +80,9 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
                 setIgnoreAnnotationValue(testMethod);
             }
             if (providedPublications.size() == 0) {
-                setPublicationByMissingProvided();
+                setPublicationByMissingProvided(testMethod);
             } else {
-                setPublicationByUsingProvided();
+                setPublicationByUsingProvided(testMethod);
 
             }
             annotation.setDataProviderClass(TestEnvironmentDataProvider.class);
@@ -133,7 +133,7 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
         logger.info(parameter + (StringUtils.isEmpty(msgValue) ? "Not Known" : msgValue));
     }
 
-    public void setPublicationWithoutIgnored(ArrayList<Publication> providedPublications) {
+    public void setPublicationWithoutIgnored(ArrayList<Publication> providedPublications, Method testMethod) {
         ArrayList<Publication> ignoredPublications = new ArrayList<>(publications);
         if (providedPublications.size() == 0) {
             providedPublications = new ArrayList<>(Arrays.asList(Publication.values()));
@@ -153,16 +153,14 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
             }
         }
         if (StringUtils.isEmpty(resultPublications)) {
-            System.setProperty(Helper.PUBLICATION, Helper.NONE_PUBLICATION);
             String msg2 = "All provided publications are ignored. Provided: " + providedPublications.toString() + "Ignored: " + ignoredPublications;
-            setPublicationInfo(Helper.NONE_PUBLICATION, msg2);
+            setPublications(resultPublications, testMethod, msg2);
         } else {
-            System.setProperty(Helper.PUBLICATION, resultPublications);
-            setPublicationInfo(resultPublications);
+            setPublications(resultPublications, testMethod, "");
         }
     }
 
-    public void setPublicationsIncluded(ArrayList<Publication> providedPublications) {
+    public void setPublicationsIncluded(ArrayList<Publication> providedPublications, Method testMethod) {
         ArrayList<Publication> includedPublications = new ArrayList<>(publications);
         if (providedPublications.size() == 0) {
             providedPublications = new ArrayList<>(Arrays.asList(Publication.values()));
@@ -182,34 +180,32 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
             }
         }
         if (StringUtils.isEmpty(resultPublications)) {
-            System.setProperty(Helper.PUBLICATION, Helper.NONE_PUBLICATION);
-            setPublicationInfo(Helper.NONE_PUBLICATION);
-            logger.warn("No one of the provided publications is included. Provided: " + providedPublications.toString() + "Included: " + includedPublications);
+            String msg2 ="No one of the provided publications is included. Provided: " + providedPublications.toString() + "Included: " + includedPublications;
+            setPublications(Helper.NONE_PUBLICATION, testMethod, msg2);
         } else {
-            System.setProperty(Helper.PUBLICATION, resultPublications);
-            setPublicationInfo(resultPublications);
+            setPublications(resultPublications, testMethod, "");
         }
     }
 
-    public void setPublicationByUsingProvided() {
+    public void setPublicationByUsingProvided(Method testMethod) {
         if (isIgnore) {
-            setPublicationWithoutIgnored(providedPublications);
+            setPublicationWithoutIgnored(providedPublications, testMethod);
         } else if (isInclude) {
-            setPublicationsIncluded(providedPublications);
+            setPublicationsIncluded(providedPublications, testMethod);
         } else {
-            setPublications(providedPublications);
+            setPublications(providedPublications, testMethod);
         }
     }
 
-    public void setPublicationByMissingProvided() {
+    public void setPublicationByMissingProvided(Method testMethod) {
         if (isInclude) {
-            setPublications(publications);
+            setPublications(publications, testMethod);
 
         } else if (isIgnore) {
-            setPublicationWithoutIgnored(new ArrayList<Publication>());
+            setPublicationWithoutIgnored(new ArrayList<Publication>(), testMethod);
         } else {
             ArrayList<Publication> allPublications = new ArrayList<>(Arrays.asList(Publication.values()));
-            setPublications(allPublications);
+            setPublications(allPublications, testMethod);
         }
     }
 
@@ -228,14 +224,24 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
 
     }
 
-    private void setPublications(ArrayList<Publication> resultList) {
+   private void setPublications(ArrayList<Publication> resultList, Method testMethod) {
         String resultPublications = "";
         for (Publication result : resultList) {
             resultPublications = resultPublications + result.toString() + (Helper.SPLITTING_ENV_VARIABLE_VALUE);
         }
-        System.setProperty(Helper.PUBLICATION, resultPublications);
-        setPublicationInfo(resultPublications);
+       setPublications(resultPublications, testMethod, "");
     }
+
+    private void setPublications(String resultPublications, Method testMethod, String msg2) {
+        if (StringUtils.isEmpty(resultPublications)) {
+            resultPublications = Helper.NONE_PUBLICATION;
+            setPublicationInfo(Helper.NONE_PUBLICATION, msg2);
+        } else {
+            setPublicationInfo(resultPublications);
+        }
+        System.setProperty(Helper.PUBLICATION+testMethod.getName(), resultPublications);
+    }
+
 
     public void setPublicationInfo(String resultPublications) {
         setPublicationInfo(resultPublications, "");

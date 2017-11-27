@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.testng.*;
 import org.testng.annotations.DataProvider;
 
+import java.lang.reflect.Method;
+
 /**
  * The listener interface for receiving MyTestNGAnnotation events.
  * The Listener can be automatically invoked when TestNG tests are run by using ServiceLoader mechanism.
@@ -17,10 +19,12 @@ import org.testng.annotations.DataProvider;
  */
 public class TestEnvironmentDataProvider {
     static final Logger logger = Logger.getLogger(TestEnvironmentDataProvider.class);
+    String test;
 
     @DataProvider(name = "environment")
-    public static Object[][] execution() {
-        String publicationToRun = System.getProperty("publication", Helper.NONE_PUBLICATION);
+    public static Object[][] execution(Method testMethod) {
+        logger.info(testMethod.getName());
+        String publicationToRun = System.getProperty(Helper.PUBLICATION+testMethod.getName(), Helper.NONE_PUBLICATION);
         if (publicationToRun.equals(Helper.NONE_PUBLICATION)) {
             throw new SkipException("Skipping - No Test to run with the provided environment");
         }
