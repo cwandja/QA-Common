@@ -9,14 +9,6 @@ import org.testng.annotations.DataProvider;
 
 import java.lang.reflect.Method;
 
-/**
- * The listener interface for receiving MyTestNGAnnotation events.
- * The Listener can be automatically invoked when TestNG tests are run by using ServiceLoader mechanism.
- * You can also add this listener to a TestNG Test class by adding
- * before the test class
- *
- * @see Include
- */
 public class TestEnvironmentDataProvider {
     static final Logger logger = Logger.getLogger(TestEnvironmentDataProvider.class);
     String test;
