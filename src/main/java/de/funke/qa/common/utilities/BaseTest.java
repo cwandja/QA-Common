@@ -1,4 +1,4 @@
-package de.funke.utilities;
+package de.funke.qa.common.utilities;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;

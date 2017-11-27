@@ -1,4 +1,4 @@
-package de.funke.listener;
+package de.funke.qa.common.listener;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ListIterator;
 
-import de.funke.annotation.Ignore;
-import de.funke.annotation.Include;
-import de.funke.dataprovider.TestEnvironmentDataProvider;
-import de.funke.enumeration.Publication;
-import de.funke.enumeration.Stage;
-import de.funke.utilities.Helper;
+import de.funke.qa.common.annotation.Ignore;
+import de.funke.qa.common.annotation.Include;
+import de.funke.qa.common.dataprovider.TestEnvironmentDataProvider;
+import de.funke.qa.common.enumeration.Publication;
+import de.funke.qa.common.enumeration.Stage;
+import de.funke.qa.common.utilities.Helper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.testng.IAnnotationTransformer;

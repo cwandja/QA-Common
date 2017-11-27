@@ -1,8 +1,8 @@
-package de.funke.dataprovider;
+package de.funke.qa.common.dataprovider;
 
-import de.funke.annotation.Include;
-import de.funke.enumeration.Publication;
-import de.funke.utilities.Helper;
+import de.funke.qa.common.annotation.Include;
+import de.funke.qa.common.enumeration.Publication;
+import de.funke.qa.common.utilities.Helper;
 import org.apache.log4j.Logger;
 import org.testng.*;
 import org.testng.annotations.DataProvider;

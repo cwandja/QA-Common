@@ -1,4 +1,4 @@
-package de.funke.enumeration;
+package de.funke.qa.common.enumeration;
 
 public enum Stage {
 

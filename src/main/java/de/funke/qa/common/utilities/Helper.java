@@ -1,7 +1,7 @@
-package de.funke.utilities;
+package de.funke.qa.common.utilities;
 
-import de.funke.enumeration.Publication;
-import de.funke.enumeration.Stage;
+import de.funke.qa.common.enumeration.Publication;
+import de.funke.qa.common.enumeration.Stage;
 
 public class Helper {
     public static final String HTTP_PROTOCOL = "http://";

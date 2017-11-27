@@ -1,4 +1,4 @@
-package de.funke.listener;
+package de.funke.qa.common.listener;
 
 import org.apache.log4j.Logger;
 import org.testng.ITestContext;
