@@ -32,8 +32,8 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
 
     private boolean isTestMethodIncluded(ITestAnnotation annotation) {
         ArrayList<String> groups = new ArrayList<>(Arrays.asList(annotation.getGroups()));
-        String groupIn = System.getProperty("includeGroups");
-        String groupNotIn = System.getProperty("excludeGroups");
+        String groupIn = System.getProperty("include.groups");
+        String groupNotIn = System.getProperty("exclude.groups");
         boolean included = false;
         if (StringUtils.isEmpty(groupIn)) {
             included = true;
