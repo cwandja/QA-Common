@@ -13,7 +13,7 @@ public class BaseTest {
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
-       System.setProperty("webdriver.chrome.driver", "/Users/cwandja/projects/Testautomation/src/test/resources/chromedriver2");
+       System.setProperty("webdriver.chrome.driver", "/Users/cwandja/projects/common/src/main/resources/chromedriver2");
        Configuration.browser = System.getProperty("selenide.browser", "chrome");
        WebDriver.Window window = WebDriverRunner.getWebDriver().manage().window();
        window.maximize();
