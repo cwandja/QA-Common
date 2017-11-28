@@ -2,8 +2,10 @@ package de.funke.qa.common.utilities;
 
 import de.funke.qa.common.enumeration.Publication;
 import de.funke.qa.common.enumeration.Stage;
+import org.apache.log4j.Logger;
 
 public class Helper {
+    static final Logger logger = Logger.getLogger(Helper.class);
     public static final String HTTP_PROTOCOL = "http://";
     public static final String HTTPS_PROTOCOL = "https://";
     public static final String ALLE_PUBLICATIONS = "alle";
@@ -11,6 +13,10 @@ public class Helper {
     public static final String PUBLICATION = "publication";
     public static final String STAGE = "stage";
     public static final String SPLITTING_ENV_VARIABLE_VALUE = ",";
+    public static int TEST_ITEM_LIMIT = 5;
+    public static final String SUCCESS_MESSAGE = "AMP validation successful";
+    public static final String INTEGRATIONTEST_RUBRIK="/test/integrationstest/artikel-regressionstest";
+
 
 
 
