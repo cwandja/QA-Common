@@ -9,6 +9,9 @@ public class Article {
     private String url;
 
     public static String NACHRICHT_ID="212686771";
+    public Article(){
+
+    }
     public Article(String id, String baseUrl){
         this.url = baseUrl + Helper.INTEGRATIONTEST_RUBRIK + id;
     }
