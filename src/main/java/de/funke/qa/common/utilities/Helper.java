@@ -13,9 +13,8 @@ public class Helper {
     public static final String PUBLICATION = "publication";
     public static final String STAGE = "stage";
     public static final String SPLITTING_ENV_VARIABLE_VALUE = ",";
-    public static int TEST_ITEM_LIMIT = 5;
     public static final String SUCCESS_MESSAGE = "AMP validation successful";
-    public static final String INTEGRATIONTEST_RUBRIK="/test/integrationstest/artikel-regressionstest";
+    public static final String INTEGRATIONTEST_RUBRIK="/test/integrationstest/artikel-regressionstest/";
 
 
 
