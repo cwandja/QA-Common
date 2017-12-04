@@ -13,10 +13,6 @@ public class ArticlePage extends BasePage{
 
     public Main main = Selenide.page(Main.class);
 
-    public SelenideElement page404Element(){
-        return $("#page__404__heading");
-    }
-
     public ArticlePage goToArticlePage(String id){
         ArticlePage articlePage = open(id, ArticlePage.class);
         if(page404Element().isDisplayed())

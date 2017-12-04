@@ -47,7 +47,7 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
                 }
             }
         }
-        if (StringUtils.isNotEmpty(groupNotIn)) {
+        if (included && StringUtils.isNotEmpty(groupNotIn)) {
             ArrayList<String> groupNotInList = new ArrayList<>(Arrays.asList(groupNotIn.split(Helper.SPLITTING_ENV_VARIABLE_VALUE)));
             for (ListIterator li = groupNotInList.listIterator(0); li.hasNext(); ) {
                 if (groups.contains(li.next())) {

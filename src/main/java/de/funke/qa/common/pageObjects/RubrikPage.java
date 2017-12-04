@@ -1,5 +1,6 @@
 package de.funke.qa.common.pageObjects;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import de.funke.qa.common.BasePage;
 import de.funke.qa.common.utilities.Helper;
@@ -17,9 +18,22 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class RubrikPage extends BasePage {
     static final Logger logger = Logger.getLogger(RubrikPage.class);
+    public static String ARTICLE_TAGNAME = "article";
+
+    public Header header = Selenide.page(Header.class);
+
+    public Footer footer = Selenide.page(Footer.class);
+
+    public Main main = Selenide.page(Main.class);
+
+    public RubrikPage goToRubrikPage(String rubrikPage) {
+        if (StringUtils.isNotEmpty(rubrikPage))
+            return open(rubrikPage, RubrikPage.class);
+        return open(Helper.INTEGRATIONTEST_RUBRIK, RubrikPage.class);
+    }
 
     public RubrikPage goToRubrikPage() {
-        return open(Helper.INTEGRATIONTEST_RUBRIK, RubrikPage.class);
+        return goToRubrikPage(null);
     }
 
     public class ArticleEntry {
@@ -49,13 +63,12 @@ public class RubrikPage extends BasePage {
     }
 
     public List<ArticleEntry> articles() {
-        return $$(By.tagName("article")).stream().map(ArticleEntry::new).collect(Collectors.toList());
+        return $$(By.tagName(ARTICLE_TAGNAME)).stream().map(ArticleEntry::new).collect(Collectors.toList());
     }
 
     public Article getFirstArticle() {
-        List<ArticleEntry> articles = articles();
-        Assert.assertTrue(articles.size() > 0);
-        return articles.get(0).asArticle();
+        return new ArticleEntry($(By.tagName(ARTICLE_TAGNAME))).asArticle();
+
     }
 
     public List<Article> getArticles() {

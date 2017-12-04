@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class Header {
-    public ElementsCollection menuRubrikList() {
+    public ElementsCollection menuRubriks() {
         ElementsCollection rubrikList = $$("#nav-main ul.nav-main--major li.nav-main__item--level1");
         rubrikList.shouldBe(CollectionCondition.sizeGreaterThan(0));
         return rubrikList;
@@ -20,7 +20,7 @@ public class Header {
 
     public List<String> rubrikPaths() {
         List<String> rubrikPaths = new ArrayList<String>();
-        for (SelenideElement rubrik : menuRubrikList()) {
+        for (SelenideElement rubrik : menuRubriks()) {
             String url = rubrik.find(By.tagName("a")).getAttribute("href");
             rubrikPaths.add(url);
         }
