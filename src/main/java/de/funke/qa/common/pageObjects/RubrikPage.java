@@ -32,7 +32,7 @@ public class RubrikPage extends BasePage {
         return open(Helper.INTEGRATIONTEST_RUBRIK, RubrikPage.class);
     }
 
-    public RubrikPage goToRubrikPage() {
+    public RubrikPage goToTestRubrikPage() {
         return goToRubrikPage(null);
     }
 

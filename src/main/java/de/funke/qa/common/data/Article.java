@@ -3,6 +3,7 @@ package de.funke.qa.common.data;
 import de.funke.qa.common.enumeration.ArticleEnum;
 import de.funke.qa.common.enumeration.Publication;
 import de.funke.qa.common.utilities.Helper;
+import org.apache.commons.lang3.StringUtils;
 
 public class Article {
     private String id;
@@ -28,6 +29,13 @@ public class Article {
     }
 
     public String getId() {
+        if(StringUtils.isEmpty(id)){
+           if(StringUtils.isNotEmpty(url)){
+            String [] paths = url.split("/");
+            String result = paths[paths.length - 2];
+            id = result.replace("article", "");
+           }
+        }
         return id;
     }
 
@@ -36,6 +44,15 @@ public class Article {
     }
 
     public String getUrl() {
+        return getUrl("");
+    }
+
+    public String getUrl(String baseUrl) {
+        if(StringUtils.isNotEmpty(baseUrl)) {
+            if (StringUtils.isNotEmpty(id)) {
+                url = baseUrl + "/" + id;
+            }
+        }
         return url;
     }
 

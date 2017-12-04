@@ -2,6 +2,7 @@ package de.funke.qa.common.pageObjects;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import de.funke.qa.common.BasePage;
+import de.funke.qa.common.data.Article;
 import org.testng.Assert;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -13,10 +14,10 @@ public class ArticlePage extends BasePage{
 
     public Main main = Selenide.page(Main.class);
 
-    public ArticlePage goToArticlePage(String id){
-        ArticlePage articlePage = open(id, ArticlePage.class);
-        if(page404Element().isDisplayed())
-        Assert.assertFalse(true);
+    public ArticlePage goToArticlePage(Article article){
+        ArticlePage articlePage = open("/" + article.getId(), ArticlePage.class);
+        Assert.assertFalse(page404Element().isDisplayed());
+        Assert.assertTrue(main.titleElt().getText().contains(article.getTitle()));
         return articlePage;
     }
 
