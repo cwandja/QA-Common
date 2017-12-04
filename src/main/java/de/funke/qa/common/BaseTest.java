@@ -3,6 +3,7 @@ package de.funke.qa.common;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import de.funke.qa.common.data.Article;
+import de.funke.qa.common.enumeration.Publication;
 import de.funke.qa.common.enumeration.Stage;
 import de.funke.qa.common.pageObjects.RubrikPage;
 import de.funke.qa.common.utilities.Helper;
@@ -28,12 +29,11 @@ public class BaseTest {
         window.maximize();
         Dimension size = window.getSize();
         System.out.println("Display size = " + size.getWidth() + "x" + size.getHeight());
-        getTestArticles();
 
     }
 
-    //  @BeforeGroups(groups = "article")
-    public void getTestArticles() {
+    @BeforeClass(alwaysRun = true)
+    public void setTestArticles() {
         if (testArticles.isEmpty()) {
             Configuration.baseUrl = Helper.getDefaultBaseUrl(stage);
             RubrikPage testRubrikPage = new RubrikPage();
