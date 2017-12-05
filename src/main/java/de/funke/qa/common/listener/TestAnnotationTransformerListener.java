@@ -19,11 +19,11 @@ import org.testng.annotations.ITestAnnotation;
 
 public class TestAnnotationTransformerListener implements IAnnotationTransformer {
     static final Logger logger = Logger.getLogger(TestAnnotationTransformerListener.class);
-    ArrayList<Publication> publications = new ArrayList<>();
-    ArrayList<Stage> stages = new ArrayList<>();
+    ArrayList<Publication> publications = new ArrayList<Publication>();
+    ArrayList<Stage> stages = new ArrayList<Stage>();
     boolean isIgnore = false;
     boolean isInclude = false;
-    ArrayList<Publication> providedPublications = new ArrayList<>(getPublicationsProvided());
+    ArrayList<Publication> providedPublications = new ArrayList<Publication>(getPublicationsProvided());
 
     private boolean annotationPresent(Method method, Class clazz) {
         boolean retVal = method.isAnnotationPresent(clazz) ? true : false;
@@ -31,7 +31,7 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
     }
 
     private boolean isTestMethodIncluded(ITestAnnotation annotation) {
-        ArrayList<String> groups = new ArrayList<>(Arrays.asList(annotation.getGroups()));
+        ArrayList<String> groups = new ArrayList<String>(Arrays.asList(annotation.getGroups()));
         String groupIn = System.getProperty("include.groups");
         String groupNotIn = System.getProperty("exclude.groups");
         boolean included = false;
@@ -39,7 +39,7 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
             included = true;
         }
         if (StringUtils.isNotEmpty(groupIn)) {
-            ArrayList<String> groupInList = new ArrayList<>(Arrays.asList(groupIn.split(Helper.SPLITTING_ENV_VARIABLE_VALUE)));
+            ArrayList<String> groupInList = new ArrayList<String>(Arrays.asList(groupIn.split(Helper.SPLITTING_ENV_VARIABLE_VALUE)));
             for (ListIterator li = groupInList.listIterator(0); li.hasNext(); ) {
                 if (groups.contains(li.next())) {
                     included = true;
@@ -48,7 +48,7 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
             }
         }
         if (included && StringUtils.isNotEmpty(groupNotIn)) {
-            ArrayList<String> groupNotInList = new ArrayList<>(Arrays.asList(groupNotIn.split(Helper.SPLITTING_ENV_VARIABLE_VALUE)));
+            ArrayList<String> groupNotInList = new ArrayList<String>(Arrays.asList(groupNotIn.split(Helper.SPLITTING_ENV_VARIABLE_VALUE)));
             for (ListIterator li = groupNotInList.listIterator(0); li.hasNext(); ) {
                 if (groups.contains(li.next())) {
                     included = false;
@@ -62,7 +62,6 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
         return included;
     }
 
-    @Override
     public void transform(ITestAnnotation annotation, Class testClass,
                           Constructor testConstructor, Method testMethod) {
         if (isTestMethodIncluded(annotation)) {
@@ -94,8 +93,8 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
     public void setIncludeAnnotationValue(Method m1) {
         logger.info("@Include has been invoked...");
 
-        publications = new ArrayList<>(Arrays.asList(m1.getAnnotation(Include.class).publications()));
-        stages = new ArrayList<>(Arrays.asList(m1.getAnnotation(Include.class).stages()));
+        publications = new ArrayList<Publication>(Arrays.asList(m1.getAnnotation(Include.class).publications()));
+        stages = new ArrayList<Stage>(Arrays.asList(m1.getAnnotation(Include.class).stages()));
 
         String msgValue = "";
         for (ListIterator li = publications.listIterator(0); li.hasNext(); ) {
@@ -113,8 +112,8 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
     public void setIgnoreAnnotationValue(Method m1) {
         logger.info("@Ignore has been invoked...");
 
-        publications = new ArrayList<>(Arrays.asList(m1.getAnnotation(Ignore.class).publications()));
-        stages = new ArrayList<>(Arrays.asList(m1.getAnnotation(Ignore.class).stages()));
+        publications = new ArrayList<Publication>(Arrays.asList(m1.getAnnotation(Ignore.class).publications()));
+        stages = new ArrayList<Stage>(Arrays.asList(m1.getAnnotation(Ignore.class).stages()));
 
         String msgValue = "";
         for (ListIterator li = publications.listIterator(0); li.hasNext(); ) {
@@ -134,9 +133,9 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
     }
 
     public void setPublicationWithoutIgnored(ArrayList<Publication> providedPublications, Method testMethod) {
-        ArrayList<Publication> ignoredPublications = new ArrayList<>(publications);
+        ArrayList<Publication> ignoredPublications = new ArrayList<Publication>(publications);
         if (providedPublications.size() == 0) {
-            providedPublications = new ArrayList<>(Arrays.asList(Publication.values()));
+            providedPublications = new ArrayList<Publication>(Arrays.asList(Publication.values()));
         }
         String resultPublications = "";
         for (Publication provided : providedPublications) {
@@ -161,9 +160,9 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
     }
 
     public void setPublicationsIncluded(ArrayList<Publication> providedPublications, Method testMethod) {
-        ArrayList<Publication> includedPublications = new ArrayList<>(publications);
+        ArrayList<Publication> includedPublications = new ArrayList<Publication>(publications);
         if (providedPublications.size() == 0) {
-            providedPublications = new ArrayList<>(Arrays.asList(Publication.values()));
+            providedPublications = new ArrayList<Publication>(Arrays.asList(Publication.values()));
         }
         String resultPublications = "";
         for (Publication provided : providedPublications) {
@@ -180,7 +179,7 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
             }
         }
         if (StringUtils.isEmpty(resultPublications)) {
-            String msg2 ="No one of the provided publications is included. Provided: " + providedPublications.toString() + "Included: " + includedPublications;
+            String msg2 = "No one of the provided publications is included. Provided: " + providedPublications.toString() + "Included: " + includedPublications;
             setPublications(Helper.NONE_PUBLICATION, testMethod, msg2);
         } else {
             setPublications(resultPublications, testMethod, "");
@@ -204,7 +203,7 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
         } else if (isIgnore) {
             setPublicationWithoutIgnored(new ArrayList<Publication>(), testMethod);
         } else {
-            ArrayList<Publication> allPublications = new ArrayList<>(Arrays.asList(Publication.values()));
+            ArrayList<Publication> allPublications = new ArrayList<Publication>(Arrays.asList(Publication.values()));
             setPublications(allPublications, testMethod);
         }
     }
@@ -212,9 +211,9 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
     private ArrayList<Publication> getPublicationsProvided() {
         String publication = System.getProperty(Helper.PUBLICATION, Helper.NONE_PUBLICATION).toUpperCase().replace("-", "_");
         String[] stringPublications = publication.split(Helper.SPLITTING_ENV_VARIABLE_VALUE);
-        ArrayList<Publication> providedPublications = new ArrayList<>();
+        ArrayList<Publication> providedPublications = new ArrayList<Publication>();
         if (stringPublications.length == 1 && stringPublications[0].equals(Helper.NONE_PUBLICATION.toUpperCase())) {
-            return new ArrayList<>();
+            return new ArrayList<Publication>();
         }
         for (int i = 0; i < stringPublications.length; i++) {
             providedPublications.add(Publication.valueOf(stringPublications[i]));
@@ -224,12 +223,12 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
 
     }
 
-   private void setPublications(ArrayList<Publication> resultList, Method testMethod) {
+    private void setPublications(ArrayList<Publication> resultList, Method testMethod) {
         String resultPublications = "";
         for (Publication result : resultList) {
             resultPublications = resultPublications + result.toString() + (Helper.SPLITTING_ENV_VARIABLE_VALUE);
         }
-       setPublications(resultPublications, testMethod, "");
+        setPublications(resultPublications, testMethod, "");
     }
 
     private void setPublications(String resultPublications, Method testMethod, String msg2) {
@@ -239,7 +238,7 @@ public class TestAnnotationTransformerListener implements IAnnotationTransformer
         } else {
             setPublicationInfo(resultPublications);
         }
-        System.setProperty(Helper.PUBLICATION+testMethod.getName(), resultPublications);
+        System.setProperty(Helper.PUBLICATION + testMethod.getName(), resultPublications);
     }
 
 
